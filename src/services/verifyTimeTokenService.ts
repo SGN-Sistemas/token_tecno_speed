@@ -33,7 +33,7 @@ export class VerifyToken{
             }
             return{
                 message: 'Sem dados',
-                status: 205
+                status: 204
 
             }
         } catch (error) {

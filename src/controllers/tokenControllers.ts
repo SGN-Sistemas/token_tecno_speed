@@ -20,22 +20,14 @@ export class TokenControllers {
         if(status === 204){
             const createTokenService = new CreateTokenService()
             const createTokenServiceExec = await createTokenService.execute()
-            console.log('====================================');
-            console.log(createTokenServiceExec);
-            console.log('====================================');
             if(createTokenServiceExec.status !== 200 ){
-                console.log('====================================');
-                console.log(1);
-                console.log('====================================');
                 throw new AppError(createTokenServiceExec.message,createTokenServiceExec.status)
             }
             token   =   createTokenServiceExec.token
             refresh_token = createTokenServiceExec.refresh_token
             data_criacao = createTokenServiceExec.data_criacao
-            
             return response.status(createTokenServiceExec.status).json({token,refresh_token,data_criacao})
         }
-
 
         return response.status(status).json({message})
 

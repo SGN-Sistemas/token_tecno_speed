@@ -2,6 +2,7 @@ import 'express-async-errors'
 import express, { NextFunction, Request, Response } from 'express'
 import cors from 'cors'
 import AppError from './middlewares/AppError'
+import { routerToken } from './routes/token.routes'
 
 const app = express()
 
@@ -13,6 +14,7 @@ app.use(cors({
 app.use('/',(req: Request, res: Response)=>{
     throw new AppError('Teste',404)
 })
+app.use('/token',routerToken)
 app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
     if (error instanceof AppError) {
         return res.status(error.statusCode).json({

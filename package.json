@@ -1,0 +1,10 @@
+{
+  "name": "att_token_tecnospeed",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "git-commit-msg-linter": "^5.0.4",
+    "typescript": "^5.2.2"
+  }
+}

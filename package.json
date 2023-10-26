@@ -7,6 +7,7 @@
     "dev": "nodemon --watch 'src/' --exec 'ts-node src/server.ts' -e ts"
   },
   "dependencies": {
+    "@prisma/client": "5.5.2",
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "express-async-errors": "^3.1.1",

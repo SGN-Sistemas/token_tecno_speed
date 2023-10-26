@@ -28,7 +28,7 @@ export class VerifyToken{
                 }
                 return {
                     message: 'Passou o prazo',
-                    status: 205
+                    status: 403
                 }
             }
             return{

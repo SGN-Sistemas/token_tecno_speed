@@ -1,0 +1,24 @@
+BEGIN TRY
+
+BEGIN TRAN;
+
+-- CreateTable
+CREATE TABLE [dbo].[Token] (
+    [id] INT NOT NULL IDENTITY(1,1),
+    [token] NVARCHAR(1000) NOT NULL,
+    [data_criacao] DATETIME2 NOT NULL,
+    CONSTRAINT [Token_pkey] PRIMARY KEY CLUSTERED ([id])
+);
+
+COMMIT TRAN;
+
+END TRY
+BEGIN CATCH
+
+IF @@TRANCOUNT > 0
+BEGIN
+    ROLLBACK TRAN;
+END;
+THROW
+
+END CATCH

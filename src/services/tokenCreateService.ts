@@ -1,5 +1,6 @@
 import axios from "axios";
 import dotenv from "dotenv";
+import { formatDbData } from "../utils/transformData";
 
 dotenv.config()
 interface IResponse {
@@ -27,7 +28,7 @@ export class CreateTokenService {
                         message:'',
                         token: token,
                         refresh_token: refresh_token,
-                        data_criacao: dataNow,
+                        data_criacao: formatDbData(dataNow),
                         status: 200
                     }
                 })

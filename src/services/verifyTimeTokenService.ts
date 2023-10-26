@@ -1,5 +1,6 @@
 import { PrismaClient, Prisma } from '@prisma/client'
 import { Itoken } from "../types/Itoken";
+import { verifyToken } from '../utils/verifyExperitedToken';
 
 interface IResponse {
     message: string;
@@ -14,21 +15,23 @@ export class VerifyToken{
     public async execute():Promise<IResponse>{
         
         try {
-            const dateNow = new Date();
             const getToken:Itoken | null = await this.prisma.token.findFirst()
             if(getToken !== null){
-                const dateCreate = new Date(getToken.data_criacao)
-                const twelveHours = 43200000/*12 horas em milisegundos*/
-                const resultDateSub = dateNow.getTime() - dateCreate.getTime()
-                if (resultDateSub < twelveHours) {
+                if(verifyToken(getToken.token)){
                     return {
                         message: getToken.token,
                         status: 200
                     }
                 }
+                if(verifyToken(getToken.refresh_token)){
+                    return {
+                        message: getToken.refresh_token,
+                        status: 202
+                    }
+                }
                 return {
                     message: 'Passou o prazo',
-                    status: 403
+                    status: 401
                 }
             }
             return{

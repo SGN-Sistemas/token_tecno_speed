@@ -17,6 +17,9 @@ export class TokenControllers {
             throw new AppError(message,status)
         }
 
+        const createTokenService = new CreateTokenService()
+        const createTokenServiceExec = await createTokenService.execute()
+
         return response.status(status).json({message})
 
     }

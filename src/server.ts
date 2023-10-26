@@ -7,7 +7,12 @@ const app = express()
 
 const port = 9006
 
-app.use(cors())
+app.use(cors({
+    origin: '*'
+}))
+app.use('/',(req: Request, res: Response)=>{
+    throw new AppError('Teste',404)
+})
 app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
     if (error instanceof AppError) {
         return res.status(error.statusCode).json({

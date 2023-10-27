@@ -3,8 +3,8 @@ import { Itoken } from "../types/Itoken";
 import { verifyToken } from '../utils/verifyExperitedToken';
 
 interface IResponse {
-    message: string;
-    status: number
+    message: Itoken;
+    status: number;
 }
 export class VerifyToken{
     private prisma: PrismaClient;
@@ -16,32 +16,46 @@ export class VerifyToken{
         
         try {
             const getToken:Itoken | null = await this.prisma.token.findFirst()
-            if(getToken !== null){
+            if(getToken){
                 if(verifyToken(getToken.token)){
                     return {
-                        message: getToken.token,
+                        message: {
+                            id: getToken.id,
+                            token: getToken.token,
+                            data_criacao: new Date(),
+                            refresh_token: getToken.refresh_token
+                        },
                         status: 200
                     }
                 }
-                if(verifyToken(getToken.refresh_token)){
-                    return {
-                        message: getToken.refresh_token,
-                        status: 202
-                    }
-                }
                 return {
-                    message: 'Passou o prazo',
-                    status: 401
+                    message: {
+                        id: getToken.id,
+                        token: getToken.token,
+                        data_criacao: new Date(),
+                        refresh_token: getToken.refresh_token
+                    },
+                    status: 204
                 }
             }
             return{
-                message: 'Sem dados',
+                message: {
+                    id: 0,
+                    token: '',
+                    data_criacao: new Date(),
+                    refresh_token: ''
+                },
                 status: 204
 
             }
         } catch (error) {
             return{
-                message: 'Internal server erro',
+                message: {
+                    id: 0,
+                    token: '',
+                    data_criacao: new Date(),
+                    refresh_token: ''
+                },
                 status: 500
             }
         }finally {
